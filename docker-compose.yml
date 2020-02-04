@@ -2,18 +2,39 @@ version: '3'
 services:
   redis:
     image: "redis:alpine"
-  ubuntu:
+  users:
+    build: "users/"
+    environment:
+        - FLASK_ENV=development
+    volumes:
+        - ./users/:/app
+    ports:
+        - "5001:5000"
+  photos:
+    build: "photos/"
+    environment:
+        - FLASK_ENV=development
+    volumes:
+        - ./photos/:/app
+    ports:
+        - "5002:5000"
+  zato:
     build: "zato/"
     ports:
         - "8183:8183"
         - "11223:11223"
+        - "17010:17010"
+        - "17011:17011"
     entrypoint:
         - "/bin/bash"
         - -c
         - |
             mkdir /opt/zato/example && \
             zato quickstart create /opt/zato/example sqlite redis 6379 --cluster_name zato-example --servers 1 && \
+            sed -i 's/127.0.0.1:11223/0.0.0.0:11223/g' /opt/zato/example/load-balancer/config/repo/zato.config && \
             /opt/zato/example/zato-qs-start.sh && \
             tail -f /opt/zato/example/server1/logs/server.log
     links:
         - redis
+        - users
+        - photos
