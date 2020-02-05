@@ -46,6 +46,19 @@ services:
             zato quickstart create /opt/zato/example sqlite redis 6379 --cluster_name zato-example --servers 1 && \
             sed -i 's/127.0.0.1:11223/0.0.0.0:11223/g' /opt/zato/example/load-balancer/config/repo/zato.config && \
             /opt/zato/example/zato-qs-start.sh && \
+            zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
+                "cluster_id": 1,
+                "name": "Login",
+                "is_internal": true,
+                "is_active": true,
+                "connection": "outgoing",
+                "transport": "plain_http",
+                "url_path": "/login",
+                "host": "http://users:5000/",
+                "ping_method": "HEAD",
+                "pool_size": 20,
+                "timeout": "10"
+            }' && \
             tail -f /opt/zato/example/server1/logs/server.log
     links:
         - redis

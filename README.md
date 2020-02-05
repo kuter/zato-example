@@ -1,13 +1,11 @@
 # Zato ESB example
 
 ## Running example
-
 ```
 $ docker-compose up
 ```
 
 ## Check if PING service works
-
 ```
 $ curl localhost:11223/zato/ping ; echo
 {"zato_ping_response": {"pong": "zato"}, "zato_env": {"result": "ZATO_OK", "cid": "dd334d37c15369008aa42e92", "details": ""}}
@@ -21,13 +19,11 @@ or invoke service from command line:
 ```
 
 ## Hot deploying first service
-
 ```
 $ docker cp services/my_service.py zato-example_zato_1:/opt/zato/example/server1/pickup/incoming/services
 ```
 
 ## Add channel for that connection
-
 ```
 # zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
     "cluster_id": 1,
@@ -44,16 +40,7 @@ $ docker cp services/my_service.py zato-example_zato_1:/opt/zato/example/server1
 }'
 ```
 
-## Get HTTP or SOAP objects list by connection type
-
-Connection type must be 'channel' or 'outgoing'
-
-```
-# zato service invoke /opt/zato/example/server1 zato.http-soap.get-list --payload '{"cluster_id": 1, "connection": "outgoing"}'
-```
-
 ## Add ongoing connection
-
 ```
 # zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{   
     "cluster_id": 1,
@@ -67,6 +54,16 @@ Connection type must be 'channel' or 'outgoing'
     "ping_method": "HEAD",
     "pool_size": 20, 
     "timeout": "10"
+}'
+```
+
+## Get HTTP or SOAP objects list by connection type
+Connection type must be 'channel' or 'outgoing'.
+
+```
+# zato service invoke /opt/zato/example/server1 zato.http-soap.get-list --payload '{
+    "cluster_id": 1,
+    "connection": "outgoing"
 }'
 ```
 
