@@ -1,7 +1,12 @@
-from flask import Flask, jsonify
+from flask import Flask, abort, jsonify, request
 
 
 app = Flask(__name__)
+
+
+USERS = {
+    "foo": "bar"
+}
 
 
 @app.route("/")
@@ -11,6 +16,13 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    login = request.form["login"]
+    password = request.form["password"]
+
+    valid = login in USERS and password == USERS[login]
+    if not valid:
+        abort(401)
+
     return jsonify({
         "first_name": "foo",
         "last_name": "bar"
