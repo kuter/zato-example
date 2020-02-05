@@ -26,6 +26,24 @@ or invoke service from command line:
 $ docker cp services/my_service.py zato-example_zato_1:/opt/zato/example/server1/pickup/incoming/services
 ```
 
+## Add channel for that connection
+
+```
+# zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
+    "cluster_id": 1,
+    "name": "Get Client Details",
+    "is_active": true,
+    "is_internal": false,
+    "url_path": "/tutorial/first-service",
+    "service": "my-service.get-client-details",
+    "ping_method": "HEAD",
+    "pool_size": 20,
+    "timeout": 10,
+    "connection": "channel",
+    "transport": "plain_http"
+}'
+```
+
 ## Get HTTP or SOAP objects list by connection type
 
 Connection type must be 'channel' or 'outgoing'
