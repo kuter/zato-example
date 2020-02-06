@@ -1,13 +1,13 @@
 #!/bin/bash
 CONTAINER=zato-example_zato_1
-docker cp services/photos.py zato-example_zato_1:/opt/zato/example/server1/pickup/incoming/services
+docker cp services/photos.py $CONTAINER:/opt/zato/example/server1/pickup/incoming/services
 
 docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
     "cluster_id": 1,
     "name": "Get photo",
     "is_active": true,
     "is_internal": false,
-    "url_path": "/photos/get-photo",
+    "url_path": "/photos/get-photo/{photo_id}/",
     "service": "photos.get-photo",
     "ping_method": "HEAD",
     "pool_size": 20,
@@ -27,7 +27,7 @@ docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-
     "host": "http://users:5000",
     "ping_method": "HEAD",
     "pool_size": 20,
-    "timeout": "10"
+    "timeout": "3600"
 }'
 
 docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
@@ -41,5 +41,5 @@ docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-
     "host": "http://photos:5000",
     "ping_method": "HEAD",
     "pool_size": 20,
-    "timeout": "10"
+    "timeout": "3600"
 }'
