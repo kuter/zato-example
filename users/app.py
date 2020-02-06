@@ -1,6 +1,5 @@
 from flask import Flask, abort, jsonify, request
 
-
 app = Flask(__name__)
 
 
@@ -21,7 +20,10 @@ def login():
 
     valid = login in USERS and password == USERS[login]
     if not valid:
+        app.logger.info("Login failed.")
         abort(401)
+
+    app.logger.info("Login successful.")
 
     return jsonify({
         "first_name": "foo",

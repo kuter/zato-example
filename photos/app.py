@@ -17,6 +17,10 @@ PHOTOS = [
     Photo(3, "https://via.placeholder.com/150/FFFF00/000000", False)
 ]
 
+def is_authenticated():
+    app.logger.info("is_authenticated called !")
+    return True
+
 
 @app.route("/")
 def index():
@@ -25,6 +29,7 @@ def index():
 
 @app.route("/photo/<int:photo_id>")
 def show_photo(photo_id):
+    app.logger.info("show_photo {}".format(photo_id))
     obj = next((x for x in PHOTOS if x.photo_id == photo_id), None)
     return jsonify({
         "src": obj.src

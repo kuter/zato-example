@@ -1,17 +1,17 @@
 import json
 
+from future.moves.urllib.parse import parse_qs
 from zato.server.service import Service
 
 
 class GetPhoto(Service):
-    def handle(self):
-        login = self.outgoing.plain_http.get("Login")
-        resp = login.conn.post(self.cid, json.loads(self.request.payload))
+    def handle(self, _parse_qs=parse_qs):
+        # get photo_id from url
+        photo_id = self.request.http.params.photo_id
 
-        is_authenticated = False if resp.status_code == 401 else True
+        params = {'photo_id': photo_id}
 
-        photo = self.outgoing.plain_http.get("Photo")
-        self.logger.info(dir(self.request))
-        resp = photo.conn.get(self.cid, {"is_authenticated": is_authenticated})
+        conn = self.outgoing.plain_http.get("Photo").conn
+        resp = conn.get(self.cid, params)
 
-        self.response.payload = json.dumps(resp)
+        self.response.payload = resp.content

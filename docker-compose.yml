@@ -4,26 +4,24 @@ services:
     image: "redis:alpine"
   users:
     build: "users/"
-    environment:
-        - FLASK_ENV=development
     volumes:
         - ./users/:/app
     ports:
         - "5001:5000"
     environment:
+        - FLASK_ENV=development
         - WDB_SOCKET_SERVER=wdb
         - WDB_NO_BROWSER_AUTO_OPEN=True
     links:
         - wdb
   photos:
     build: "photos/"
-    environment:
-        - FLASK_ENV=development
     volumes:
         - ./photos/:/app
     ports:
         - "5002:5000"
     environment:
+        - FLASK_ENV=development
         - WDB_SOCKET_SERVER=wdb
         - WDB_NO_BROWSER_AUTO_OPEN=True
     links:
@@ -46,32 +44,6 @@ services:
             zato quickstart create /opt/zato/example sqlite redis 6379 --cluster_name zato-example --servers 1 && \
             sed -i 's/127.0.0.1:11223/0.0.0.0:11223/g' /opt/zato/example/load-balancer/config/repo/zato.config && \
             /opt/zato/example/zato-qs-start.sh && \
-            zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
-                "cluster_id": 1,
-                "name": "Login",
-                "is_internal": true,
-                "is_active": true,
-                "connection": "outgoing",
-                "transport": "plain_http",
-                "url_path": "/login",
-                "host": "http://users:5000",
-                "ping_method": "HEAD",
-                "pool_size": 20,
-                "timeout": "10"
-            }' && \
-            zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
-                "cluster_id": 1,
-                "name": "Photo",
-                "is_internal": true,
-                "is_active": true,
-                "connection": "outgoing",
-                "transport": "plain_http",
-                "url_path": "/photo",
-                "host": "http://photos:5000",
-                "ping_method": "HEAD",
-                "pool_size": 20,
-                "timeout": "10"
-            }' && \
             tail -f /opt/zato/example/server1/logs/server.log
     links:
         - redis
