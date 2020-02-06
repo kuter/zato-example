@@ -54,7 +54,20 @@ services:
                 "connection": "outgoing",
                 "transport": "plain_http",
                 "url_path": "/login",
-                "host": "http://users:5000/",
+                "host": "http://users:5000",
+                "ping_method": "HEAD",
+                "pool_size": 20,
+                "timeout": "10"
+            }' && \
+            zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
+                "cluster_id": 1,
+                "name": "Photo",
+                "is_internal": true,
+                "is_active": true,
+                "connection": "outgoing",
+                "transport": "plain_http",
+                "url_path": "/photo",
+                "host": "http://photos:5000",
                 "ping_method": "HEAD",
                 "pool_size": 20,
                 "timeout": "10"
