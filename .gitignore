@@ -118,3 +118,5 @@ yarn.lock
 webpack-*.json
 
 static/
+
+.pre-commit-config.yaml

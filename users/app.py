@@ -1,11 +1,11 @@
+import uuid
+
 from flask import Flask, abort, jsonify, request
 
 app = Flask(__name__)
 
 
-USERS = {
-    "foo": "bar"
-}
+USERS = {"foo": "bar"}
 
 
 @app.route("/")
@@ -25,8 +25,6 @@ def login():
 
     app.logger.info("Login successful.")
 
-    return jsonify({
-        "first_name": "foo",
-        "last_name": "bar"
-    })
-
+    return jsonify(
+        {"first_name": "foo", "last_name": "bar", "token": uuid.uuid4().hex}
+    )
