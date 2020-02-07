@@ -5,6 +5,12 @@
 $ docker-compose up
 ```
 
+and setup `users` and `photos` services:
+
+```
+$ sh install.sh
+```
+
 ## Check if PING service works
 ```
 $ curl localhost:11223/zato/ping ; echo
