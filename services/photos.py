@@ -11,6 +11,7 @@ class GetPhoto(Service):
 
         login_conn = self.outgoing.plain_http.get("Login").conn
         resp = login_conn.post(self.cid, json.loads(self.request.payload))
+
         try:
             token = resp.json()["token"]
         except JSONDecodeError:

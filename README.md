@@ -73,6 +73,43 @@ Connection type must be 'channel' or 'outgoing'.
 }'
 ```
 
+## How to test if that works
+
+photo 1 is available for everyone, to check this type:
+
+```
+$ curl http://localhost:5002/photo/1
+{
+  "src": "https://via.placeholder.com/150/0000FF/808080"
+}
+```
+
+getting user token:
+
+```
+$ curl -X POST -F "login=foo" -F "password=bar" http://localhost:5001/login
+{
+    "first_name": "foo", 
+    "last_name": "bar", 
+    "token": "bed4c91860374151ad2f2676ded55a52"
+}
+```
+
+now create service (get-photo) and two outgoing services (photos and users) by typing:
+
+```
+$ sh install.sh
+```
+
+call get-photo service with credentials and get photo for logged users only:
+
+```
+$ curl localhost:11223/photos/get-photo/2/ -d '{"login": "foo", "password": "bar"}' ; echo
+{
+  "src": "https://via.placeholder.com/150/FF0000/FFFFFF"
+}
+```
+
 ## Debugging with wdb
 
 install wdb inside container:

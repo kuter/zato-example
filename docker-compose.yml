@@ -40,6 +40,7 @@ services:
         - "/bin/bash"
         - -c
         - |
+            rm -rf /opt/zato/example && \
             mkdir /opt/zato/example && \
             zato quickstart create /opt/zato/example sqlite redis 6379 --cluster_name zato-example --servers 1 && \
             sed -i 's/127.0.0.1:11223/0.0.0.0:11223/g' /opt/zato/example/load-balancer/config/repo/zato.config && \
