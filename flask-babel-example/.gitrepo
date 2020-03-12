@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/kuter/flask-babel-example
 	branch = master
-	commit = 7f8df5633352c0f26ed467b348872cf4c981bd46
-	parent = 347209a1c59af7cc4c9d7b9a51861e23e158f55b
+	commit = 08df68ebe2d2accd844cac3ffe5f207ac341108e
+	parent = c0aacac3502014a40a52e2a51e03282a5304e3f3
 	method = merge
 	cmdver = 0.4.1
