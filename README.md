@@ -13,7 +13,7 @@ $ sh install.sh
 
 ## Check if PING service works
 ```
-$ curl localhost:11223/zato/ping ; echo
+$ curl http://localhost:11223/zato/ping ; echo
 {"zato_ping_response": {"pong": "zato"}, "zato_env": {"result": "ZATO_OK", "cid": "dd334d37c15369008aa42e92", "details": ""}}
 ```
 
@@ -95,19 +95,19 @@ $ curl -X POST -F "login=foo" -F "password=bar" http://localhost:5001/login
 }
 ```
 
-now create service (get-photo) and two outgoing services (photos and users) by typing:
+call get-photo service via ESB with credentials and get photo for logged users only:
 
 ```
-$ sh install.sh
-```
-
-call get-photo service with credentials and get photo for logged users only:
-
-```
-$ curl localhost:11223/photos/get-photo/2/ -d '{"login": "foo", "password": "bar"}' ; echo
+$ curl http://localhost:11223/photos/get-photo/2/ -d '{"login": "foo", "password": "bar"}'
 {
   "src": "https://via.placeholder.com/150/FF0000/FFFFFF"
 }
+```
+
+getting user token via ESB:
+
+```
+curl -X POST http://localhost:11223/users/login/ -d '{"login": "foo", "password": "bar"}'
 ```
 
 ## Debugging with wdb
