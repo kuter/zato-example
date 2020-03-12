@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/kuter/flask-babel-example
+	branch = master
+	commit = 8604ef817d390d7c14593855cae6d3fb3d02793a
+	parent = 11742f9a4fe1224ac97b850aa3717b19e3653284
+	method = merge
+	cmdver = 0.4.1
