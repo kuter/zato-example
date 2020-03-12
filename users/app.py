@@ -13,7 +13,7 @@ def index():
     return "Users service!"
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def login():
     login = request.form["login"]
     password = request.form["password"]

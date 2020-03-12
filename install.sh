@@ -1,6 +1,7 @@
 #!/bin/bash
 CONTAINER=zato-example_zato_1
 docker cp services/photos.py $CONTAINER:/opt/zato/example/server1/pickup/incoming/services
+docker cp services/users.py $CONTAINER:/opt/zato/example/server1/pickup/incoming/services
 
 docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
     "cluster_id": 1,
@@ -16,7 +17,6 @@ docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-
     "transport": "plain_http"
 }'
 
-docker cp services/users.py $CONTAINER:/opt/zato/example/server1/pickup/incoming/services
 docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
     "cluster_id": 1,
     "name": "Login",
@@ -55,6 +55,20 @@ docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-
     "transport": "plain_http",
     "url_path": "/photo/{photo_id}",
     "host": "http://photos:5000",
+    "ping_method": "HEAD",
+    "pool_size": 20,
+    "timeout": "3600"
+}'
+
+docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
+    "cluster_id": 1,
+    "name": "Translate",
+    "is_internal": true,
+    "is_active": true,
+    "connection": "outgoing",
+    "transport": "plain_http",
+    "url_path": "/",
+    "host": "http://translate:5000",
     "ping_method": "HEAD",
     "pool_size": 20,
     "timeout": "3600"

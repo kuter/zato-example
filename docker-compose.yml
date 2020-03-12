@@ -18,6 +18,15 @@ services:
     environment:
         - FLASK_ENV=development
 
+  translate:
+    build: "translate/"
+    volumes:
+        - ./translate/:/app
+    ports:
+        - "5003:5000"
+    environment:
+        - FLASK_ENV=development
+
   redis:
     image: "redis:alpine"
 
@@ -39,6 +48,7 @@ services:
             /opt/zato/example/zato-qs-start.sh && \
             tail -f /opt/zato/example/server1/logs/server.log
     links:
-        - redis
         - users
         - photos 
+        - translate
+        - redis
