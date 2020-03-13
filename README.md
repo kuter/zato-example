@@ -1,11 +1,21 @@
 # Zato ESB example
 
+![Architecture diagram][architecture]
+
+
+
+## Requirements
+
+* [Docker Compose](https://docs.docker.com/compose/)
+* [git-subrepo](https://github.com/ingydotnet/git-subrepo)
+
 ## Running example
 ```
+$ git subrepo pull --all
 $ docker-compose up
 ```
 
-and setup `users` and `photos` services:
+and setup up services:
 
 ```
 $ sh install.sh
@@ -13,7 +23,7 @@ $ sh install.sh
 
 ## Check if PING service works
 ```
-$ curl localhost:11223/zato/ping ; echo
+$ curl http://localhost:11223/zato/ping ; echo
 {"zato_ping_response": {"pong": "zato"}, "zato_env": {"result": "ZATO_OK", "cid": "dd334d37c15369008aa42e92", "details": ""}}
 ```
 
@@ -95,37 +105,30 @@ $ curl -X POST -F "login=foo" -F "password=bar" http://localhost:5001/login
 }
 ```
 
-now create service (get-photo) and two outgoing services (photos and users) by typing:
+call get-photo service via ESB with credentials and get photo for logged users only:
 
 ```
-$ sh install.sh
-```
-
-call get-photo service with credentials and get photo for logged users only:
-
-```
-$ curl localhost:11223/photos/get-photo/2/ -d '{"login": "foo", "password": "bar"}' ; echo
+$ curl http://localhost:11223/photos/get-photo/2/ -d '{"login": "foo", "password": "bar"}'
 {
   "src": "https://via.placeholder.com/150/FF0000/FFFFFF"
 }
 ```
 
-## Debugging with wdb
-
-install wdb inside container:
+getting user token via ESB:
 
 ```
-$ docker exec -it zato-example_users_1 pip install wdb
+curl -X POST \
+    -d '{"login": "foo", "password": "bar"}' \
+    http://localhost:11223/users/login/
 ```
 
-set breakpoint in your code:
+call Login service with invalid credentials and pass ACCEP-LANGUAGE header:
 
 ```
-$ import wdb; wdb.set_trace()
+curl -X POST \
+    -d '{"login": "foo", "password": "wrong"}' \
+    -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
+    http://localhost:11223/users/login/
 ```
 
-now you can access http://localhost:1984 via browser:
-
-```
-$ xdg-open http://localhost:1984
-```
+[architecture]: https://github.com/kuter/zato-example/raw/master/architecture.png "Architecture"

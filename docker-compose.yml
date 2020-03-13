@@ -1,7 +1,5 @@
 version: '3'
 services:
-  redis:
-    image: "redis:alpine"
   users:
     build: "users/"
     volumes:
@@ -10,10 +8,7 @@ services:
         - "5001:5000"
     environment:
         - FLASK_ENV=development
-        - WDB_SOCKET_SERVER=wdb
-        - WDB_NO_BROWSER_AUTO_OPEN=True
-    links:
-        - wdb
+
   photos:
     build: "photos/"
     volumes:
@@ -22,10 +17,20 @@ services:
         - "5002:5000"
     environment:
         - FLASK_ENV=development
-        - WDB_SOCKET_SERVER=wdb
-        - WDB_NO_BROWSER_AUTO_OPEN=True
-    links:
-        - wdb
+
+  translate:
+    build: "translate/"
+    ports:
+        - "5003:5000"
+
+  events:
+    build: "events/"
+    ports:
+        - "5004:8000"
+
+  redis:
+    image: "redis:alpine"
+
   zato:
     build: "zato/"
     ports:
@@ -33,9 +38,6 @@ services:
         - "11223:11223"
         - "17010:17010"
         - "17011:17011"
-    environment:
-        - WDB_SOCKET_SERVER=wdb
-        - WDB_NO_BROWSER_AUTO_OPEN=True
     entrypoint:
         - "/bin/bash"
         - -c
@@ -47,11 +49,8 @@ services:
             /opt/zato/example/zato-qs-start.sh && \
             tail -f /opt/zato/example/server1/logs/server.log
     links:
-        - redis
         - users
-        - photos
-        - wdb
-  wdb:
-    image: kozea/wdb
-    ports:
-        - "1984:1984"
+        - photos 
+        - translate
+        - events
+        - redis

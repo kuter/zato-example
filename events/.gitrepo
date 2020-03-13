@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/kuter/fastapi-events.git
+	branch = master
+	commit = f43107bd20877a391af23298d65c8619c75fc999
+	parent = e6bb05741958e2059e887bfb4f50972a9dbcb89e
+	method = merge
+	cmdver = 0.4.1
