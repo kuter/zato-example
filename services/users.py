@@ -19,9 +19,17 @@ class Login(Service):
         login = self.outgoing.plain_http.get("Login")
         resp = login.conn.post(self.cid, request)
 
-        if not resp.ok:
+        if resp.ok:
+            message = "Login Successful"
+        else:
+            message = "Login failed"
+            # translate mesage
             translate = self.outgoing.plain_http.get("Translate")
-            resp = translate.conn.post(self.cid, {"text": "Login failed"},
+            resp = translate.conn.post(self.cid, {"text": message},
                                        headers=self.headers)
+
+        # send event
+        events = self.outgoing.plain_http.get("Events")
+        events.conn.post(self.cid, json.dumps({"event": message}))
 
         self.response.payload = resp.content
