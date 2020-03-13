@@ -20,12 +20,13 @@ services:
 
   translate:
     build: "translate/"
-    volumes:
-        - ./translate/:/app
     ports:
         - "5003:5000"
-    environment:
-        - FLASK_ENV=development
+
+  events:
+    build: "events/"
+    ports:
+        - "5004:8000"
 
   redis:
     image: "redis:alpine"
@@ -51,4 +52,5 @@ services:
         - users
         - photos 
         - translate
+        - events
         - redis

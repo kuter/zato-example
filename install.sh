@@ -73,3 +73,17 @@ docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-
     "pool_size": 20,
     "timeout": "3600"
 }'
+
+docker exec $CONTAINER zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
+    "cluster_id": 1,
+    "name": "Events",
+    "is_internal": true,
+    "is_active": true,
+    "connection": "outgoing",
+    "transport": "plain_http",
+    "url_path": "/events",
+    "host": "http://events:8000",
+    "ping_method": "HEAD",
+    "pool_size": 20,
+    "timeout": "3600"
+}'
