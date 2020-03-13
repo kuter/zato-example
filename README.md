@@ -122,7 +122,7 @@ curl -X POST \
     http://localhost:11223/users/login/
 ```
 
-call Login service with invalid credentials and pass ACCEP-LANGUAGE header:
+call Login service with invalid credentials and pass ACCEPT-LANGUAGE header:
 
 ```
 curl -X POST \
