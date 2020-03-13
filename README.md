@@ -1,11 +1,17 @@
 # Zato ESB example
 
+## Requirements
+
+* [Docker Compose](https://docs.docker.com/compose/)
+* [git-subrepo](https://github.com/ingydotnet/git-subrepo)
+
 ## Running example
 ```
+$ git subrepo pull --all
 $ docker-compose up
 ```
 
-and setup `users` and `photos` services:
+and setup up services:
 
 ```
 $ sh install.sh
