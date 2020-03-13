@@ -113,25 +113,16 @@ $ curl http://localhost:11223/photos/get-photo/2/ -d '{"login": "foo", "password
 getting user token via ESB:
 
 ```
-curl -X POST http://localhost:11223/users/login/ -d '{"login": "foo", "password": "bar"}'
+curl -X POST \
+    -d '{"login": "foo", "password": "bar"}' \
+    http://localhost:11223/users/login/
 ```
 
-## Debugging with wdb
-
-install wdb inside container:
+call Login service with invalid credentials and pass ACCEP-LANGUAGE header:
 
 ```
-$ docker exec -it zato-example_users_1 pip install wdb
-```
-
-set breakpoint in your code:
-
-```
-$ import wdb; wdb.set_trace()
-```
-
-now you can access http://localhost:1984 via browser:
-
-```
-$ xdg-open http://localhost:1984
+curl -X POST \
+    -d '{"login": "foo", "password": "wrong"}' \
+    -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
+    http://localhost:11223/users/login/
 ```
