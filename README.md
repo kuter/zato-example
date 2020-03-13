@@ -1,5 +1,9 @@
 # Zato ESB example
 
+![Architecture diagram][architecture]
+
+
+
 ## Requirements
 
 * [Docker Compose](https://docs.docker.com/compose/)
@@ -126,3 +130,5 @@ curl -X POST \
     -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
     http://localhost:11223/users/login/
 ```
+
+[architecture]: https://github.com/kuter/zato-example/raw/master/architecture.png "Architecture"
