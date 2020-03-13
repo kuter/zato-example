@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/kuter/fastapi-events.git
 	branch = master
-	commit = 18bb7b8b6f6ef17f07604f09723aa1e27f81475b
-	parent = 26af6f2017d7b37b170ee4f20ff30560b12008dd
+	commit = f43107bd20877a391af23298d65c8619c75fc999
+	parent = e6bb05741958e2059e887bfb4f50972a9dbcb89e
 	method = merge
 	cmdver = 0.4.1
