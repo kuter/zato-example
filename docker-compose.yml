@@ -47,6 +47,7 @@ services:
             zato quickstart create /opt/zato/example sqlite redis 6379 --cluster_name zato-example --servers 1 && \
             sed -i 's/127.0.0.1:11223/0.0.0.0:11223/g' /opt/zato/example/load-balancer/config/repo/zato.config && \
             /opt/zato/example/zato-qs-start.sh && \
+            zato update password /opt/zato/example/web-admin/ admin --password admin && \
             tail -f /opt/zato/example/server1/logs/server.log
     links:
         - users
@@ -54,3 +55,11 @@ services:
         - translate
         - events
         - redis
+
+  test:
+      image: "python:3.7-alpine"
+      entrypoint:
+          - "/bin/sh"
+          - -c 
+          - |
+              sleep 3600
