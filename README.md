@@ -45,7 +45,7 @@ or invoke service from command line:
 }'
 ```
 
-## Add ougoing connection
+## Add outgoing connection
 ```
 # zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{   
     "cluster_id": 1,
