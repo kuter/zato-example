@@ -15,12 +15,6 @@ $ git subrepo pull --all
 $ docker-compose up
 ```
 
-and setup up services:
-
-```
-$ sh install.sh
-```
-
 ## Check if PING service works
 ```
 $ curl http://localhost:11223/zato/ping ; echo
@@ -34,12 +28,7 @@ or invoke service from command line:
 {'pong': 'zato'}
 ```
 
-## Hot deploying first service
-```
-$ docker cp services/my_service.py zato-example_zato_1:/opt/zato/example/server1/pickup/incoming/services
-```
-
-## Add channel for that connection
+## Add channel connection
 ```
 # zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
     "cluster_id": 1,
@@ -56,7 +45,7 @@ $ docker cp services/my_service.py zato-example_zato_1:/opt/zato/example/server1
 }'
 ```
 
-## Add ongoing connection
+## Add ougoing connection
 ```
 # zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{   
     "cluster_id": 1,
