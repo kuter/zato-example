@@ -1,0 +1,80 @@
+[
+    {
+        "cluster_id": 1,
+        "name": "Login",
+        "is_internal": true,
+        "is_active": true,
+        "connection": "outgoing",
+        "transport": "plain_http",
+        "url_path": "/login",
+        "host": "http://users:5000",
+        "ping_method": "HEAD",
+        "pool_size": 20,
+        "timeout": "3600"
+    },
+    {
+        "cluster_id": 1,
+        "name": "Photo",
+        "is_internal": true,
+        "is_active": true,
+        "connection": "outgoing",
+        "transport": "plain_http",
+        "url_path": "/photo/{photo_id}",
+        "host": "http://photos:5000",
+        "ping_method": "HEAD",
+        "pool_size": 20,
+        "timeout": "3600"
+    },
+    {
+        "cluster_id": 1,
+        "name": "Translate",
+        "is_internal": true,
+        "is_active": true,
+        "connection": "outgoing",
+        "transport": "plain_http",
+        "url_path": "/",
+        "host": "http://translate:5000",
+        "ping_method": "HEAD",
+        "pool_size": 20,
+        "timeout": "3600"
+    },
+    {
+        "cluster_id": 1,
+        "name": "Events",
+        "is_internal": true,
+        "is_active": true,
+        "connection": "outgoing",
+        "transport": "plain_http",
+        "url_path": "/events",
+        "host": "http://events:8000",
+        "ping_method": "HEAD",
+        "pool_size": 20,
+        "timeout": "3600"
+    },
+    {
+        "cluster_id": 1,
+        "name": "GetPhoto",
+        "is_active": true,
+        "is_internal": false,
+        "url_path": "/photos/get-photo/{photo_id}/",
+        "service": "photos.get-photo",
+        "ping_method": "HEAD",
+        "pool_size": 20,
+        "timeout": 3600,
+        "connection": "channel",
+        "transport": "plain_http"
+    },
+    {
+        "cluster_id": 1,
+        "name": "Login",
+        "is_active": true,
+        "is_internal": false,
+        "url_path": "/users/login/",
+        "service": "users.login",
+        "ping_method": "HEAD",
+        "pool_size": 20,
+        "timeout": 3600,
+        "connection": "channel",
+        "transport": "plain_http"
+    }
+]
