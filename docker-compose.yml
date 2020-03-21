@@ -57,9 +57,9 @@ services:
         - redis
 
   test:
-      image: "python:3.7-alpine"
-      entrypoint:
-          - "/bin/sh"
-          - -c 
-          - |
-              sleep 3600
+      build: "tests/"
+      volumes:
+        - ./tests/:/app
+      links:
+          - zato
+      command: ["./wait-for-it.sh", "-t", "60", "zato:8183", "--", "behave"]
