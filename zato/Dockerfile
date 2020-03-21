@@ -6,6 +6,7 @@ RUN apt-get install -y \
     curl \
     software-properties-common \
     sudo
+RUN apt-get install -y jq
 RUN echo $TZ > /etc/timezone
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
 RUN curl -s https://zato.io/repo/zato-3.1-C9B13DF28CFE287D.pgp.txt | sudo apt-key add -
@@ -14,3 +15,8 @@ RUN apt-get install -y zato
 RUN sudo su -- zato
 RUN cd /opt/zato/current && git checkout -- ./requirements.txt && ./update.sh
 ENV PATH="/opt/zato/current/bin:${PATH}"
+
+COPY services.json /
+COPY docker-entrypoint.sh /
+
+ENTRYPOINT ["sh", "docker-entrypoint.sh"]
