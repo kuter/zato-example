@@ -1,0 +1,14 @@
+image: docker/compose:1.25.1
+variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+services:
+    - docker:18.09-dind
+
+stages:
+    - test
+
+test:
+    stage: test
+    script:
+        - docker-compose up --build --abort-on-container-exit --exit-code-from tests
