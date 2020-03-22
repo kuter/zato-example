@@ -47,7 +47,7 @@ services:
         - events
         - redis
 
-  test:
+  tests:
       build: "tests/"
       volumes:
         - ./tests/:/app
