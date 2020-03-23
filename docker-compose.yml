@@ -51,6 +51,6 @@ services:
       build: "tests/"
       volumes:
         - ./tests/:/app
+      command: ["./wait-for-status.sh", "-t", "180", "-i", "20", "-s", "405", "http://zato:11223/users/login/", "--", "behave"]
       links:
           - zato
-      command: ["./wait-for-status.sh", "-t", "180", "-i", "20", "-s", "405", "http://zato:11223/users/login/", "--", "behave"]
