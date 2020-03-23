@@ -12,12 +12,13 @@ class Login(Service):
                 self.request.http._wsgi_environ.items() if
                 x.startswith("HTTP_")}
 
-    def handle(self):
-
+    def handle_POST(self):
         request = json.loads(self.request.payload)
 
         login = self.outgoing.plain_http.get("Login")
         resp = login.conn.post(self.cid, request)
+
+        self.response.status_code = resp.status_code
 
         if resp.ok:
             message = "Login Successful"

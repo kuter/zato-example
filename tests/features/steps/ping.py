@@ -1,23 +1,24 @@
 # type: ignore
 import os
 
-import requests
+import httpx
 from behave import given, then, when
 
 
 ZATO_HOST = os.getenv("ZATO_HOST", "http://zato:11223")
+SERVICE_ENDPOINT = f"{ZATO_HOST}/zato/ping"
 
 
-@given(u'built-in ping service')
+@given("built-in ping service")
 def step_given(context):
     pass
 
 
-@when(u'we call ping service')
+@when("we call ping service")
 def step_call_ping(context):
-    context.response = requests.get(f"{ZATO_HOST}/zato/ping")
+    context.response = httpx.get(SERVICE_ENDPOINT)
 
 
-@then(u'response should be ok')
+@then("response should be ok")
 def step_response_ok(context):
-    assert context.response.ok is True
+    assert context.response.status_code == 200

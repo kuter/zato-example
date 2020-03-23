@@ -53,4 +53,4 @@ services:
         - ./tests/:/app
       links:
           - zato
-      command: ["./wait-for-it.sh", "-t", "60", "zato:8183", "--", "behave"]
+      command: ["./wait-for-status.sh", "-t", "180", "-i", "20", "-s", "405", "http://zato:11223/users/login/", "--", "behave"]

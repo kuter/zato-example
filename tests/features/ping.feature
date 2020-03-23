@@ -1,4 +1,4 @@
-Feature: showing off behave
+Feature: tests built-in zato.ping service
 
     Scenario: run a simple test
         Given built-in ping service

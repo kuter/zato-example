@@ -1,2 +1,2 @@
 behave==1.2.6
-requests==2.23.0
+httpx==0.12.1
