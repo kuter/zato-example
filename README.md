@@ -11,7 +11,6 @@
 
 ## Running example
 ```
-$ git subrepo pull --all
 $ docker-compose up
 ```
 
