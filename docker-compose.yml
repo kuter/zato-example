@@ -1,30 +1,30 @@
 version: '3'
 services:
   users:
-    build: "users/"
+    build: "apps/users/"
     volumes:
-        - ./users/:/app
+        - ./apps/users/:/app
     ports:
         - "5001:5000"
     environment:
         - FLASK_ENV=development
 
   photos:
-    build: "photos/"
+    build: "apps/photos/"
     volumes:
-        - ./photos/:/app
+        - ./apps/photos/:/app
     ports:
         - "5002:5000"
     environment:
         - FLASK_ENV=development
 
   translate:
-    build: "translate/"
+    build: "apps/translate/"
     ports:
         - "5003:5000"
 
   events:
-    build: "events/"
+    build: "apps/events/"
     ports:
         - "5004:8000"
 
