@@ -17,7 +17,7 @@ $ git submodule sync --recursive
 $ git submodule update --init --remote
 ```
 
-run zato ESB, applications and run tests:
+run zato ESB, applications and tests:
 ```
 $ docker-compose up
 ```
