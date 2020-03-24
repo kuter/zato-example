@@ -1,6 +1,0 @@
-[submodule "app/events"]
-	path = app/events
-	url = ../fastapi-events.git
-[submodule "app/translate"]
-	path = app/translate
-	url = ../flask-babel-example.git
