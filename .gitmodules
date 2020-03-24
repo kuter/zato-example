@@ -1,6 +1,6 @@
 [submodule "apps/translate"]
 	path = apps/translate
-	url = git@github.com:kuter/flask-babel-example.git
+	url = ../flask-babel-example.git
 [submodule "apps/events"]
 	path = apps/events
-	url = git@github.com:kuter/fastapi-events.git
+	url = ../fastapi-events.git
