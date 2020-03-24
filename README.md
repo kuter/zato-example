@@ -10,6 +10,14 @@
 * [git-subrepo](https://github.com/ingydotnet/git-subrepo)
 
 ## Running example
+
+sync events and translate apps:
+```
+$ git submodule sync --recursive
+$ git submodule update --init --remote
+```
+
+run zato ESB, applications and run tests:
 ```
 $ docker-compose up
 ```
@@ -21,7 +29,6 @@ $ curl http://localhost:11223/zato/ping ; echo
 ```
 
 or invoke service from command line:
-
 ```
 # zato service invoke /opt/zato/example/server1/ zato.ping
 {'pong': 'zato'}
