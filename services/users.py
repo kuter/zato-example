@@ -25,9 +25,10 @@ class Login(Service):
         else:
             message = "Login failed"
             # translate mesage
-            translate = self.outgoing.plain_http.get("Translate")
-            resp = translate.conn.post(self.cid, {"text": message},
-                                       headers=self.headers)
+
+        translate = self.outgoing.plain_http.get("Translate")
+        resp = translate.conn.post(self.cid, {"text": message},
+                                    headers=self.headers)
 
         # send event
         events = self.outgoing.plain_http.get("Events")
