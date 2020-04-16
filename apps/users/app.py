@@ -1,11 +1,13 @@
-import uuid
+from datetime import datetime, timedelta
 
 from flask import Flask, abort, jsonify, request
+from jose import jwt
 
 app = Flask(__name__)
 
 
 USERS = {"foo": "bar"}
+JWT_KEY = "secret"
 
 
 @app.route("/")
@@ -25,6 +27,11 @@ def login():
 
     app.logger.info("Login successful.")
 
-    return jsonify(
-        {"first_name": "foo", "last_name": "bar", "token": uuid.uuid4().hex}
-    )
+    claims = {
+        "login": login,
+        "scopes": ["photos:view"],
+        "exp": datetime.utcnow() + timedelta(minutes=5),
+    }
+    token = jwt.encode(claims, JWT_KEY, algorithm="HS256")
+
+    return jsonify({"token": token})
