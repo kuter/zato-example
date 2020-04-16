@@ -18,6 +18,9 @@ def step_try_to_log_in(context):
     context.response = httpx.post(SERVICE_ENDPOINT, json=context.form_data)
 
 
-@then("it should return {status_code}")
-def step_check_status_code(context, status_code):
-    assert context.response.status_code == int(status_code)
+@given("I logged in")
+def step_Im_logged_in(context):
+    payload = {"login": "foo", "password": "bar"}
+    context.response = httpx.post(SERVICE_ENDPOINT, json=payload)
+    token = context.response.json()["token"]
+    context.headers = {"authorization": f"Bearer {token}"}

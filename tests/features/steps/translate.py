@@ -29,7 +29,7 @@ def step_impl(context):
     )
 
 
-@then("I should get response {response}")
+@then("I should get status response {response}")
 def step_check_response(context, response):
-    text = context.response.content.decode("utf-8")
-    assert text == response, f"{text} != {response}"
+    response_json = context.response.json()
+    assert response == response_json["status"]
