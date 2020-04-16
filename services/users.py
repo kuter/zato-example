@@ -26,5 +26,11 @@ class Login(Service):
         events = self.outgoing.plain_http.get("Events")
         events.conn.post(self.cid, json.dumps({"event": message}))
 
+        payload = {
+            "status": resp_translate.content.decode("utf-8"),
+        }
+        if resp.ok:
+            payload.update(resp.json())
+
         self.response.status_code = resp.status_code
-        self.response.payload = resp_translate.content
+        self.response.payload = json.dumps(payload)
