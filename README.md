@@ -127,6 +127,7 @@ Connection type must be 'channel' or 'outgoing'.
 # zato service invoke /opt/zato/example/server1 zato.http-soap.get-list --payload '{
     "cluster_id": 1,
     "connection": "outgoing"
-}'
+}
+```
 
 [architecture]: https://github.com/kuter/zato-example/raw/master/architecture.png "Architecture"
