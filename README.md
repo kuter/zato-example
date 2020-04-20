@@ -49,10 +49,18 @@ $ curl http://localhost:5002/photo/2
 
 Check if builtin zato PING service works:
 ```
-$ curl http://localhost:11223/zato/ping ; echo
-{"zato_ping_response": {"pong": "zato"}, "zato_env": {"result": "ZATO_OK", "cid": "dd334d37c15369008aa42e92", "details": ""}}
+$ curl http://localhost:11223/zato/ping
+{
+  "zato_ping_response": {
+    "pong": "zato"
+  },
+  "zato_env": {
+    "result": "ZATO_OK",
+    "cid": "c80ebe3cb653c3f1a73e28e9",
+    "details": ""
+  }
+}
 ```
-
 
 call Login service and get token via ESB:
 ```
