@@ -2,12 +2,9 @@
 
 ![Architecture diagram][architecture]
 
-
-
 ## Requirements
 
 * [Docker Compose](https://docs.docker.com/compose/)
-* [git-subrepo](https://github.com/ingydotnet/git-subrepo)
 
 ## Running example
 
@@ -22,19 +19,76 @@ run zato ESB, applications and tests:
 $ docker-compose up
 ```
 
-## Check if PING service works
+## Try it out
+
+getting user token directry from users app:
+```
+$ curl -X POST -F "login=foo" -F "password=bar" http://localhost:5001/login
+{ 
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImZvbyIsInNjb3BlcyI6WyJwaG90b3M6dmlldyJdLCJleHAiOjE1ODc0MDczOTR9.8Ftdkm31_GTCgM-JRo6btjnLVMDBU_sGdCF6m5VcLWM"
+}
+```
+
+photo 1 is available for everyone, to check this type:
+
+```
+$ curl http://localhost:5002/photo/1
+{
+  "src": "https://via.placeholder.com/150/0000FF/808080"
+}
+```
+
+but anonymous user cannot get photo with id 2:
+```
+$ curl http://localhost:5002/photo/2
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>403 Forbidden</title>
+<h1>Forbidden</h1>
+<p>You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.</p>
+```
+
+Check if builtin zato PING service works:
 ```
 $ curl http://localhost:11223/zato/ping ; echo
 {"zato_ping_response": {"pong": "zato"}, "zato_env": {"result": "ZATO_OK", "cid": "dd334d37c15369008aa42e92", "details": ""}}
 ```
 
-or invoke service from command line:
+
+call Login service and get token via ESB:
+```
+$ curl -X POST -d '{"login": "foo", "password": "bar"}' \
+    http://localhost:11223/users/login/
+{
+  "status": "Login Successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImZvbyIsInNjb3BlcyI6WyJwaG90b3M6dmlldyJdLCJleHAiOjE1ODc0MDczOTR9.8Ftdkm31_GTCgM-JRo6btjnLVMDBU_sGdCF6m5VcLWM"
+}
+```
+call get-photo service with given token:
+```
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImZvbyIsInNjb3BlcyI6WyJwaG90b3M6dmlldyJdLCJleHAiOjE1ODc0MDgwNDd9.TgboV5Yy3zkXMx-xDvlwyljUXv2vEnFxEfWs0yaMmDQ" \
+    http://localhost:11223/photos/get-photo/2/
+{
+  "src": "https://via.placeholder.com/150/FF0000/FFFFFF"
+}
+```
+call Login service with invalid credentials and pass ACCEPT-LANGUAGE header:
+```
+curl -X POST \
+    -d '{"login": "foo", "password": "wrong"}' \
+    -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
+    http://localhost:11223/users/login/
+```
+
+## Zato client
+
+### Invoke service
+invoke zato PING service from command line:
 ```
 # zato service invoke /opt/zato/example/server1/ zato.ping
 {'pong': 'zato'}
 ```
 
-## Add channel connection
+### Add channel connection
 ```
 # zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{
     "cluster_id": 1,
@@ -50,8 +104,7 @@ or invoke service from command line:
     "transport": "plain_http"
 }'
 ```
-
-## Add outgoing connection
+### Add outgoing connection
 ```
 # zato service invoke /opt/zato/example/server1/ zato.http-soap.create --payload '{   
     "cluster_id": 1,
@@ -67,8 +120,7 @@ or invoke service from command line:
     "timeout": "10"
 }'
 ```
-
-## Get HTTP or SOAP objects list by connection type
+### Get HTTP or SOAP objects list by connection type
 Connection type must be 'channel' or 'outgoing'.
 
 ```
@@ -76,54 +128,5 @@ Connection type must be 'channel' or 'outgoing'.
     "cluster_id": 1,
     "connection": "outgoing"
 }'
-```
-
-## How to test if that works
-
-photo 1 is available for everyone, to check this type:
-
-```
-$ curl http://localhost:5002/photo/1
-{
-  "src": "https://via.placeholder.com/150/0000FF/808080"
-}
-```
-
-getting user token:
-
-```
-$ curl -X POST -F "login=foo" -F "password=bar" http://localhost:5001/login
-{
-    "first_name": "foo", 
-    "last_name": "bar", 
-    "token": "bed4c91860374151ad2f2676ded55a52"
-}
-```
-
-call get-photo service via ESB with credentials and get photo for logged users only:
-
-```
-$ curl http://localhost:11223/photos/get-photo/2/ -d '{"login": "foo", "password": "bar"}'
-{
-  "src": "https://via.placeholder.com/150/FF0000/FFFFFF"
-}
-```
-
-getting user token via ESB:
-
-```
-curl -X POST \
-    -d '{"login": "foo", "password": "bar"}' \
-    http://localhost:11223/users/login/
-```
-
-call Login service with invalid credentials and pass ACCEPT-LANGUAGE header:
-
-```
-curl -X POST \
-    -d '{"login": "foo", "password": "wrong"}' \
-    -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
-    http://localhost:11223/users/login/
-```
 
 [architecture]: https://github.com/kuter/zato-example/raw/master/architecture.png "Architecture"
