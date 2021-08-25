@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zato
+spec:
+  selector:
+    matchLabels:
+      app: zato
+  template:
+    metadata:
+      labels:
+        app: zato
+    spec:
+      containers:
+        - name: zato
+          image: zato-reload
+          ports:
+            - containerPort: 8183
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zato
+spec:
+  ports:
+    - port: 5000
+  type: ClusterIP
+  selector:
+    app: zato
+---
