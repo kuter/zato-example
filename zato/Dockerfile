@@ -17,5 +17,7 @@ ENV PATH="/opt/zato/current/bin:${PATH}"
 
 COPY services.json /
 COPY docker-entrypoint.sh /
+RUN mkdir -p /services/services
+COPY services/* /incoming/services/
 
 ENTRYPOINT ["sh", "docker-entrypoint.sh"]

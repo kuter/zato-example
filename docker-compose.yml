@@ -28,7 +28,7 @@ services:
     ports:
         - "5004:8000"
 
-  redis:
+  redis-zato:
     image: "redis:alpine"
 
   zato:
@@ -45,7 +45,7 @@ services:
         - photos 
         - translate
         - events
-        - redis
+        - redis-zato
 
   tests:
       build: "tests/"
