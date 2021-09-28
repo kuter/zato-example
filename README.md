@@ -22,6 +22,12 @@ run zato ESB, applications and tests:
 $ docker-compose up
 ```
 
+### Skaffold
+
+```
+skaffold dev
+```
+
 ## Check if PING service works
 ```
 $ curl http://localhost:11223/zato/ping ; echo
@@ -124,6 +130,24 @@ curl -X POST \
     -d '{"login": "foo", "password": "wrong"}' \
     -H 'Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7' \
     http://localhost:11223/users/login/
+```
+
+## Debugging with ipdb
+
+* get into a zato k8s or docker container
+* install ipdb
+
+```
+$ pip install ipdb==0.10.2 
+```
+
+* setup breakpoint inside zato service
+* run zato server in foreground
+
+```
+$ cd /opt/zato/example/
+$ zato stop server1/
+$ zato start server1/ --fg
 ```
 
 [architecture]: https://github.com/kuter/zato-example/raw/master/architecture.png "Architecture"
