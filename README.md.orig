@@ -21,6 +21,7 @@ run zato ESB, applications and tests in docker:
 $ docker-compose up
 ```
 
+<<<<<<< HEAD
 ### Skaffold
 run zato EST, application in kubernetes:
 
@@ -28,9 +29,12 @@ run zato EST, application in kubernetes:
 skaffold dev
 ```
 
+## Check if PING service works
+=======
 ## Try it out
 
 getting user token directry from users app:
+>>>>>>> 2f826e27a24cf8051df4a581331dcd5879ef9f03
 ```
 $ curl -X POST -F "login=foo" -F "password=bar" http://localhost:5001/login
 { 
@@ -56,7 +60,7 @@ $ curl http://localhost:5002/photo/2
 <p>You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.</p>
 ```
 
-check if builtin zato PING service works:
+Check if builtin zato PING service works:
 ```
 $ curl http://localhost:11223/zato/ping
 {
@@ -147,6 +151,7 @@ Connection type must be 'channel' or 'outgoing'.
 }
 ```
 
+<<<<<<< HEAD
 call get-photo service via ESB with credentials and get photo for logged users only:
 
 ```
@@ -191,4 +196,6 @@ $ zato stop server1/
 $ zato start server1/ --fg
 ```
 
+=======
+>>>>>>> 2f826e27a24cf8051df4a581331dcd5879ef9f03
 [architecture]: https://github.com/kuter/zato-example/raw/master/architecture.png "Architecture"

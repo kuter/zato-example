@@ -1,0 +1,76 @@
+apiVersion: skaffold/v2beta1
+kind: Config
+build:
+  artifacts:
+
+  - image: events
+    context: apps/events
+
+  - image: photos
+    context: apps/photos
+
+  - image: translate
+    context: apps/translate
+
+  - image: users
+    context: apps/users
+
+  - image: zato
+    context: zato
+
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+
+      - image: events-reload
+        context: apps/events
+        docker:
+          buildArgs:
+            DEBUG: 1
+        sync:
+          manual:
+          - src: 'events/**/*.py'
+            dest: .
+
+      - image: photos-reload
+        context: apps/photos
+        docker:
+          buildArgs:
+            DEBUG: 1
+        sync:
+          manual:
+          - src: 'photos/**/*.py'
+            dest: .
+
+      - image: translate-reload
+        context: apps/translate
+        docker:
+          buildArgs:
+            DEBUG: 1
+        sync:
+          manual:
+          - src: 'translate/**/*.py'
+            dest: .
+
+      - image: users-reload
+        context: apps/users
+        docker:
+          buildArgs:
+            DEBUG: 1
+        sync:
+          manual:
+          - src: 'users/**/*.py'
+            dest: .
+
+      - image: zato-reload
+        context: zato
+        docker:
+          buildArgs:
+            DEBUG: 1
+        sync:
+          manual:
+          - src: '**/*.py'
+            dest: .

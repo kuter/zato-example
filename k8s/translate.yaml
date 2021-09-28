@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: translate
+spec:
+  selector:
+    matchLabels:
+      app: translate
+  template:
+    metadata:
+      labels:
+        app: translate
+    spec:
+      containers:
+        - name: translate
+          image: translate-reload
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: translate
+spec:
+  ports:
+    - port: 5000
+  type: ClusterIP
+  selector:
+    app: translate
+---
